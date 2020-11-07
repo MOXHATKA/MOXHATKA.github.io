@@ -4,8 +4,8 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "manifest.json": "af9bec67cf6ac23d1775ea4183d51785",
-"index.html": "fde96e5d49f4099cb4b2387872a97d0e",
-"/": "fde96e5d49f4099cb4b2387872a97d0e",
+"index.html": "00a250ac7174b39e1acd8d0e95d87cbb",
+"/": "00a250ac7174b39e1acd8d0e95d87cbb",
 "assets/images/d2.png": "4b68ad90f27aaeeddfdf0b2ea3aeb69f",
 "assets/images/whatsapp.png": "357979534d445c6727be0b9f772645e4",
 "assets/images/logo.png": "0391d6b9c854b350642fdf6feda150a2",
@@ -21,7 +21,7 @@ const RESOURCES = {
 "assets/NOTICES": "6065346735e70cbc19b23339c6a79a1b",
 "assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
 "assets/AssetManifest.json": "a967459e80373399cc2db5495ef19817",
-"main.dart.js": "763457d5f2a46e00aa6126391f94b414",
+"main.dart.js": "fda981bf1c6f1491c80f1428eb648b21",
 "version.json": "96eaea0b4f99b4877bed47953c93f8ba",
 "favicon.png": "c88f6e21911159433353f6a2efbd4f59"
 };
