@@ -148,30 +148,76 @@ var Cal = function(divId) {
         }
         this.className = "day today"
 
-        var response = await fetch("http://localhost:3000/getTimetableByGroup",
+       var data = window.Telegram.WebApp.initDataUnsafe
+
+        let req = {
+          "id": "751732167",//data.user.id,
+          "date": `${this.textContent}.${month + 1}.${year}`
+        }
+
+        // const responseId = await fetch(
+        //   'http://localhost:3000/getUserByTelegramID', 
+        //   {
+        //     method: 'POST',
+        //     headers: 
+        //       {
+        //         'Content-Type': 'application/json',
+        //       },
+        //     body: JSON.stringify(reqId),
+        //   }
+        // );
+        // let user = await responseId.json()
+
+        var response = await fetch("http://localhost:3000/getTimetableByTelegramID",
         {
           method: "POST",
-          body: JSON.stringify(
-            {
-              "group": {
-                "id": 42,
-                "name": "21/О/ИСиП",
-                "users": []
-              },
-              "date": `${this.textContent}.${month + 1}.${year}`
-            }
-          ),
+          body: JSON.stringify(req),
           headers: {
             "Content-Type": "application/json",
           }
         })
+        
+        var div = document.getElementById("timetable")
+
+        while (div.firstChild) {
+          div.removeChild(div.firstChild);
+        }
 
         var timetable = await response.json()
-        
-        var data =  window.Telegram.WebApp.initDataUnsafe 
-        var div = document.getElementById("data")
-        div.textContent = data// timetable.items[0].discipline
-        
+        var date = document.createElement("div")
+        date.style.fontWeight = 800
+        date.textContent = timetable.date
+
+        div.appendChild(date)
+
+        var br = document.createElement("br")
+        div.appendChild(br)
+
+        for (const lesson of timetable.items) {
+          var time = document.createElement("div")
+          var emoji = lesson.cabinet != "" ? "🟢" : "🔴"
+          time.textContent = `${lesson.number}. ${emoji} ${lesson.lesson1_start} - ${lesson.lesson2_end}`
+          time.style.fontWeight = 600
+          div.appendChild(time)
+
+          var discipline = document.createElement("div")
+          discipline.textContent = ` ${lesson.discipline}`
+          div.appendChild(discipline)
+
+          var teacher = document.createElement("div")
+          teacher.textContent = `${lesson.teacher}`
+          div.appendChild(teacher)
+          
+          var cabinet = document.createElement("div")
+          cabinet.textContent = lesson.cabinet != "" ? `Кабинет: ${lesson.cabinet}` : `Кабинет: Удаленно`
+          div.appendChild(cabinet)
+          
+          var br = document.createElement("br")
+          div.appendChild(br)
+          // text += lesson.discipline
+        }
+
+        // div.textContent =  text
       }
     }
   };
