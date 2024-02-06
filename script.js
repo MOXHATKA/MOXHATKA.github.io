@@ -168,7 +168,7 @@ var Cal = function(divId) {
 
         var timetable = await response.json()
         
-        var data =  window.Telegram.WebApp.initData
+        var data =  window.Telegram.WebApp.initDataUnsafe 
         var div = document.getElementById("data")
         div.textContent = data// timetable.items[0].discipline
         
