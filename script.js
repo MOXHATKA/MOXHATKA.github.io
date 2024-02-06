@@ -138,12 +138,29 @@ var Cal = function(divId) {
     const listTD = document.getElementsByClassName("day")
     console.log(listTD)
     for (const item of listTD) {
-      item.onclick = function () {
+      item.onclick = async function () {
         const listTodays = document.getElementsByClassName("today")
         for (const today of listTodays) {
           today.className = "day normal"
         }
         this.className = "day today"
+
+        var response = await fetch("http://localhost:3000/getTimetableByGroup",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            id: 42,
+            name: "21/О/ИСиП",
+            users: []
+          })
+        })
+
+        var timetable = await response.json()
+        
+        var data =  window.Telegram.WebApp.initData
+        var div = document.getElementById("data")
+        div.textContent = timetable
+        
       }
     }
   };
