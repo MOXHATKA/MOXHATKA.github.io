@@ -169,9 +169,8 @@ var Cal = function(divId) {
         var timetable = await response.json()
         
         var data =  window.Telegram.WebApp.initData
-        console.log(data)
         var div = document.getElementById("data")
-        div.textContent = timetable.items[0].discipline
+        div.textContent = data// timetable.items[0].discipline
         
       }
     }
