@@ -9,6 +9,8 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 </head>
 <body>
+    <div id="data"></div>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <div class="calendar-wrapper">
         <div id="divCal"></div>
@@ -18,5 +20,10 @@
     <div class="timetable">
         
     </div>
+    <script>
+        var data =  window.Telegram.WebApp.initData
+        var div = document.getElementById("data")
+        div.textContent = data
+    </script>
 </body>
 </html>
