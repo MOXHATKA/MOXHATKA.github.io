@@ -20,9 +20,9 @@ var Cal = function(divId) {
     //Устанавливаем текущий месяц, год
     var d = new Date();
   
-    this.currMonth = d.getMonth('9');
-    this.currYear = d.getFullYear('22');
-    this.currDay = d.getDate('3');
+    this.currMonth = d.getMonth();
+    this.currYear = d.getFullYear();
+    this.currDay = d.getDate();
   };
   
   // Переход к следующему месяцу
@@ -136,7 +136,10 @@ var Cal = function(divId) {
     document.getElementById(this.divId).innerHTML = html;
 
     const listTD = document.getElementsByClassName("day")
-    console.log(listTD)
+    let day = this.currDay
+    let month = this.currMonth
+    let year = this.currYear
+
     for (const item of listTD) {
       item.onclick = async function () {
         const listTodays = document.getElementsByClassName("today")
@@ -148,18 +151,26 @@ var Cal = function(divId) {
         var response = await fetch("http://localhost:3000/getTimetableByGroup",
         {
           method: "POST",
-          body: JSON.stringify({
-            id: 42,
-            name: "21/О/ИСиП",
-            users: []
-          })
+          body: JSON.stringify(
+            {
+              "group": {
+                "id": 42,
+                "name": "21/О/ИСиП",
+                "users": []
+              },
+              "date": `${this.textContent}.${month + 1}.${year}`
+            }
+          ),
+          headers: {
+            "Content-Type": "application/json",
+          }
         })
 
         var timetable = await response.json()
         
         var data =  window.Telegram.WebApp.initData
         var div = document.getElementById("data")
-        div.textContent = timetable
+        div.textContent = timetable.items[0].discipline
         
       }
     }
@@ -181,12 +192,12 @@ var Cal = function(divId) {
     };
 
 
-    await fetch("/connect", 
-    {
-      method: 'GET',
-    })
-    .then(async (res) => console.log((await res.json()).items))
-    .catch((err) => console.log(err));
+    // await fetch("/connect", 
+    // {
+    //   method: 'GET',
+    // })
+    // .then(async (res) => console.log((await res.json()).items))
+    // .catch((err) => console.log(err));
 
   }
   
