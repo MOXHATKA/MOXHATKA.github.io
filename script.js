@@ -151,24 +151,11 @@ var Cal = function(divId) {
        var data = window.Telegram.WebApp.initDataUnsafe
 
         let req = {
-          "id": "751732167",//data.user.id,
+          "id": data.user.id,
           "date": `${this.textContent}.${month + 1}.${year}`
         }
 
-        // const responseId = await fetch(
-        //   'http://localhost:3000/getUserByTelegramID', 
-        //   {
-        //     method: 'POST',
-        //     headers: 
-        //       {
-        //         'Content-Type': 'application/json',
-        //       },
-        //     body: JSON.stringify(reqId),
-        //   }
-        // );
-        // let user = await responseId.json()
-
-        var response = await fetch("http://localhost:3000/getTimetableByTelegramID",
+        var response = await fetch("http://62.192.240.4/getTimetableByTelegramID",
         {
           method: "POST",
           body: JSON.stringify(req),
@@ -193,10 +180,16 @@ var Cal = function(divId) {
         var br = document.createElement("br")
         div.appendChild(br)
 
+        if (timetable.items.length == 0){
+          var free = document.createElement("div")
+          free.textContent = "Выходной!"
+          div.appendChild(free)
+        }
+
         for (const lesson of timetable.items) {
           var time = document.createElement("div")
           var emoji = lesson.cabinet != "" ? "🟢" : "🔴"
-          time.textContent = `${lesson.number}. ${emoji} ${lesson.lesson1_start} - ${lesson.lesson2_end}`
+          time.textContent = `${lesson.number} ${emoji} ${lesson.lesson1_start} - ${lesson.lesson2_end}`
           time.style.fontWeight = 600
           div.appendChild(time)
 
@@ -209,17 +202,16 @@ var Cal = function(divId) {
           div.appendChild(teacher)
           
           var cabinet = document.createElement("div")
-          cabinet.textContent = lesson.cabinet != "" ? `Кабинет: ${lesson.cabinet}` : `Кабинет: Удаленно`
+          cabinet.textContent = lesson.cabinet != "" ? `Кабинет: ${lesson.cabinet}` : `Кабинет: Удалённо`
           div.appendChild(cabinet)
           
           var br = document.createElement("br")
           div.appendChild(br)
-          // text += lesson.discipline
         }
-
-        // div.textContent =  text
       }
     }
+    document.getElementsByClassName("today")[0].click()
+
   };
   
   // При загрузке окна
@@ -236,15 +228,6 @@ var Cal = function(divId) {
     getId('btnPrev').onclick = function() {
       c.previousMonth();
     };
-
-
-    // await fetch("/connect", 
-    // {
-    //   method: 'GET',
-    // })
-    // .then(async (res) => console.log((await res.json()).items))
-    // .catch((err) => console.log(err));
-
   }
   
   // Получить элемент по id
